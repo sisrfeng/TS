@@ -46,58 +46,70 @@ Feel free to use it, and contact us over on our
 
 Contributing to parser configurations is basically modifying one of the `queries/*/*.scm`.
 Each of these `scheme` files contains a *tree-sitter query* for a given purpose.
-Before going any further, we highly suggest that you [read more about tree-sitter queries](https://tree-sitter.github.io/tree-sitter/using-parsers#pattern-matching-with-queries).
+Before going any further,
+    we highly suggest that you [read more about tree-sitter queries](https://tree-sitter.github.io/tree-sitter/using-parsers#pattern-matching-with-queries).
 
-Each query has an appropriate name, which is then used by modules to extract data from the syntax tree.
+Each query has an appropriate name,
+which is then used by modules to extract data from the syntax tree.
 For now these are the types of queries used by `nvim-treesitter`:
 
-- `highlights.scm`: used for syntax highlighting, using the `highlight` module.
-- `locals.scm`: used to extract keyword definitions, scopes, references, etc, using the `locals` module.
-- `textobjects.scm`: used to define text objects.
-- `folds.scm`: used to define folds.
-- `injections.scm`: used to define injections.
+- `highlights.scm`  :  syntax highlighting, using the `highlight` module.
+- `locals.scm`      :  extract keyword definitions, scopes, references, etc, using the `locals` module.
+- `textobjects.scm` :  define text objects.
+- `folds.scm`       :  define folds.
+- `injections.scm`  :  define injections.
 
-For these types there is a *norm* you will have to follow so that features work fine.
+For these types there is a *norm* you will have to follow so that
+features work fine.
 Here are some global advices :
 
 - If your language is listed [here](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages),
-  you can install the [playground plugin](https://github.com/nvim-treesitter/playground).
+      you can install the [playground plugin](https://github.com/nvim-treesitter/playground).
+
 - If your language is listed [here](https://tree-sitter.github.io/tree-sitter/using-parsers#pattern-matching-with-queries),
-  you can debug and experiment with your queries there.
-- If not, you should consider installing the [tree-sitter cli](https://github.com/tree-sitter/tree-sitter/tree/master/cli),
-  you should then be able to open a local playground using `tree-sitter build-wasm && tree-sitter web-ui` within the
-  parsers repo.
+      you can debug and experiment with your queries there.
+
+- If not,
+    you should consider installing the [tree-sitter cli](https://github.com/tree-sitter/tree-sitter/tree/master/cli),
+  you should then be able to open a local playground
+  using `tree-sitter build-wasm && tree-sitter web-ui` within the  parsers repo.
+
 - Examples of queries can be found in [queries/](queries/)
 - Matches in the bottom will override queries that are above of them.
 
-If your language is an extension of a language (TypeScript is an extension of JavaScript for
-example), you can include the queries from your base language by adding the following _as the first
-line of your file_.
-
+If your language is an extension of a language
+(TypeScript is an extension of JavaScript for  example),
+you can include the queries from your base language by adding the following _as the first
+line of your file_. 
 ```query
 ; inherits: lang1,(optionallang)
 ```
 
-If you want to inherit a language, but don't want the languages inheriting from yours to inherit it,
-you can mark the language as optional (by putting it between parenthesis).
+If you want to inherit a language,
+but don't want the languages inheriting from yours to inherit it,
+you can mark the language as optional
+(by putting it between parenthesis).
 
 ### Highlights
 
-As languages differ quite a lot, here is a set of captures available to you when building a `highlights.scm` query.
-One important thing to note is that many of these capture groups are not supported by `neovim` for now, and will not have any
-effect on highlighting. We will work on improving highlighting in the near future though.
+As languages differ quite a lot,
+here is a set of ¿captures¿ available to you when building a `highlights.scm` query.
+One important thing to note is that many of these capture groups are not supported by
+`neovim` for now,
+and will not have any  effect on highlighting.
+We will work on improving highlighting in the near future though.
 
 #### Misc
 
 ```
 @comment
 @debug
-@error for error `ERROR` nodes.
-@none to disable completely the highlight
+@error         for error `ERROR` nodes.
+@none          to disable completely the highlight
 @preproc
-@punctuation.delimiter for `;` `.` `,`
-@punctuation.bracket for `()` or `{}`
-@punctuation.special for symbols with special meaning like `{}` in string interpolation.
+@punctuation.delimiter   for `;` `.` `,`
+@punctuation.bracket     for `()` or `{}`
+@punctuation.special     for symbols with special meaning like `{}` in string interpolation.
 ```
 
 #### Constants
@@ -156,7 +168,8 @@ effect on highlighting. We will work on improving highlighting in the near futur
 @attribute for e.g. Python decorators
 ```
 
-@conceal followed by `(#set! conceal "")` for captures that are not used for highlights but only for concealing.
+@conceal followed by `(#set! conceal "")` for captures that are not used for highlights
+but only for concealing.
 
 #### Variables
 
@@ -202,7 +215,8 @@ Used for xml-like tags
 
 #### Conceal
 
-@conceal followed by `(#set! conceal "")` for captures that are not used for highlights but only for concealing.
+@conceal followed by `(#set! conceal "")` for captures that are not used for highlights
+but only for concealing.
 
 ### Locals
 

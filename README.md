@@ -29,21 +29,28 @@
   </p>
 </div>
 
-The goal of `nvim-treesitter` is both to provide a simple and easy way to use the interface for [tree-sitter](https://github.com/tree-sitter/tree-sitter) in Neovim and to provide some basic functionality such as highlighting based on it:
+The goal of `nvim-treesitter` is both to provide a simple and easy way to use the interface for [tree-sitter](https://github.com/tree-sitter/tree-sitter)
+in Neovim and to provide some basic functionality such as highlighting based on it:
 
 ![cpp example](assets/example-cpp.png)
 
-Traditional highlighting (left) vs Treesitter-based highlighting (right).
-More examples can be found in [our gallery](https://github.com/nvim-treesitter/nvim-treesitter/wiki/Gallery).
 
-**Warning: Treesitter and nvim-treesitter highlighting are an experimental feature of Neovim.
-Please consider the experience with this plug-in as experimental until Tree-Sitter support in Neovim is stable!
+**Treesitter and nvim-treesitter highlighting are an experimental feature of Neovim.
 We recommend using the nightly builds of Neovim if possible.
 You can find the current roadmap [here](https://github.com/nvim-treesitter/nvim-treesitter/projects/1).
-The roadmap and all features of this plugin are open to change, and any suggestion will be highly appreciated!**
+The roadmap and all features of this plugin
+are open to change,
+and any suggestion will be highly appreciated!**
 
-Nvim-treesitter is based on three interlocking features: [**language parsers**](#language-parsers), [**queries**](#adding-queries), and [**modules**](#available-modules), where *modules* provide features – e.g., highlighting – based on *queries* for syntax objects extracted from a given buffer by *language parsers*.
-Users will generally only need to interact with parsers and modules as explained in the next section.
+Nvim-treesitter is based on three interlocking features:
+    [**language parsers**](#language-parsers),
+    [**queries**](#adding-queries),
+    and [**modules**](#available-modules),
+where *modules* provide features – e.g.,
+highlighting – based on *queries* for syntax objects extracted from a given buffer by
+*language parsers*.
+Users will generally only need to interact with
+    parsers and modules as explained in the next section.
 For more detailed information on setting these up, see ["Advanced setup"](#advanced-setup).
 
 ---
@@ -71,8 +78,13 @@ For more detailed information on setting these up, see ["Advanced setup"](#advan
 
 You can install `nvim-treesitter` with your favorite package manager (or using the native `package` feature of vim, see `:h packages`).
 
-**NOTE: This plugin is only guaranteed to work with specific versions of language parsers** (as specified in the `lockfile.json`). **When upgrading the plugin, you must make sure that all installed parsers are updated to the latest version** via `:TSUpdate`.
-It is strongly recommended to automate this; e.g., if you are using [vim-plug](https://github.com/junegunn/vim-plug), put this in your `init.vim` file:
+**NOTE: This plugin is only guaranteed to work with specific versions of language parsers**
+(as specified in the `lockfile.json`).
+**When upgrading the plugin,
+you must make sure that all installed parsers
+are updated to the latest version** via `:TSUpdate`.
+It is strongly recommended to automate this; e.g., if you
+are using [vim-plug](https://github.com/junegunn/vim-plug), put this in your `init.vim` file:
 
 ```vim
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
