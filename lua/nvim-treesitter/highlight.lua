@@ -9,111 +9,95 @@ local M = {}
 local hlmap = vim.treesitter.highlighter.hl_map
 
 -- nvim-treesitter Highlight Group Mappings
--- Note: Some highlight groups may not be applied upstream, some may be experimental
+-- Some highlight groups may not be applied upstream, some may be experimental
 
-hlmap["annotation"] = "TSAnnotation"
+    hlmap["annotation"]            = "TSAnnotation"
+    hlmap["attribute"]             = "TSAttribute"
+    hlmap["boolean"]               = "TSBoolean"
+    hlmap["character"]             = "TSCharacter"
+    hlmap["character.special"]     = "TSCharacterSpecial"
+    hlmap["comment"]               = "TSComment"
+    hlmap["conditional"]           = "TSConditional"
+    hlmap["constant"]              = "TSConstant"
+    hlmap["constant.builtin"]      = "TSConstBuiltin"
+    hlmap["constant.macro"]        = "TSConstMacro"
+    hlmap["constructor"]           = "TSConstructor"
+    hlmap["debug"]                 = "TSDebug"
+    hlmap["define"]                = "TSDefine"
+    hlmap["error"]                 = "TSError"
+    hlmap["exception"]             = "TSException"
+    hlmap["field"]                 = "TSField"
+    hlmap["float"]                 = "TSFloat"
+    hlmap["function"]              = "TSFunction"
+    hlmap["function.builtin"]      = "TSFuncBuiltin"
+    hlmap["function.macro"]        = "TSFuncMacro"
+    hlmap["include"]               = "TSInclude"
+    hlmap["keyword"]               = "TSKeyword"
+    hlmap["keyword.function"]      = "TSKeywordFunction"
+    hlmap["keyword.operator"]      = "TSKeywordOperator"
+    hlmap["keyword.return"]        = "TSKeywordReturn"
+    hlmap["label"]                 = "TSLabel"
+    hlmap["method"]                = "TSMethod"
 
-hlmap["attribute"] = "TSAttribute"
+    hlmap["namespace"]             = "TSNamespace"
 
-hlmap["boolean"] = "TSBoolean"
+    hlmap["none"]                  = "TSNone"
+    hlmap["number"]                = "TSNumber"
 
-hlmap["character"] = "TSCharacter"
-hlmap["character.special"] = "TSCharacterSpecial"
+    hlmap["operator"]              = "TSOperator"
 
-hlmap["comment"] = "TSComment"
+    hlmap["parameter"]             = "TSParameter"
+    hlmap["parameter.reference"]   = "TSParameterReference"
 
-hlmap["conditional"] = "TSConditional"
+    hlmap["preproc"]               = "TSPreProc"
 
-hlmap["constant"] = "TSConstant"
-hlmap["constant.builtin"] = "TSConstBuiltin"
-hlmap["constant.macro"] = "TSConstMacro"
+    hlmap["property"]              = "TSProperty"
 
-hlmap["constructor"] = "TSConstructor"
+    hlmap["punctuation.delimiter"] = "TSPunctDelimiter"
+    hlmap["punctuation.bracket"]   = "TSPunctBracket"
+    hlmap["punctuation.special"]   = "TSPunctSpecial"
 
-hlmap["debug"] = "TSDebug"
-hlmap["define"] = "TSDefine"
+    hlmap["repeat"]                = "TSRepeat"
 
-hlmap["error"] = "TSError"
-hlmap["exception"] = "TSException"
+    hlmap["storageclass"]          = "TSStorageClass"
 
-hlmap["field"] = "TSField"
+    hlmap["string"]                = "TSString"
+    hlmap["string.regex"]          = "TSStringRegex"
+    hlmap["string.escape"]         = "TSStringEscape"
+    hlmap["string.special"]        = "TSStringSpecial"
 
-hlmap["float"] = "TSFloat"
+    hlmap["symbol"]                = "TSSymbol"
 
-hlmap["function"] = "TSFunction"
-hlmap["function.builtin"] = "TSFuncBuiltin"
-hlmap["function.macro"] = "TSFuncMacro"
+    hlmap["tag"]                   = "TSTag"
+    hlmap["tag.attribute"]         = "TSTagAttribute"
+    hlmap["tag.delimiter"]         = "TSTagDelimiter"
 
-hlmap["include"] = "TSInclude"
+    hlmap["text"]                  = "TSText"
+    hlmap["text.strong"]           = "TSStrong"
+    hlmap["text.emphasis"]         = "TSEmphasis"
+    hlmap["text.underline"]        = "TSUnderline"
+    hlmap["text.strike"]           = "TSStrike"
+    hlmap["text.title"]            = "TSTitle"
+    hlmap["text.literal"]          = "TSLiteral"
+    hlmap["text.uri"]              = "TSURI"
+    hlmap["text.math"]             = "TSMath"
+    hlmap["text.reference"]        = "TSTextReference"
+    hlmap["text.environment"]      = "TSEnvironment"
+    hlmap["text.environment.name"] = "TSEnvironmentName"
 
-hlmap["keyword"] = "TSKeyword"
-hlmap["keyword.function"] = "TSKeywordFunction"
-hlmap["keyword.operator"] = "TSKeywordOperator"
-hlmap["keyword.return"] = "TSKeywordReturn"
+    hlmap["text.note"]             = "TSNote"
+    hlmap["text.warning"]          = "TSWarning"
+    hlmap["text.danger"]           = "TSDanger"
 
-hlmap["label"] = "TSLabel"
+    hlmap["todo"]                  = "TSTodo"
 
-hlmap["method"] = "TSMethod"
+    hlmap["type"]                  = "TSType"
+    hlmap["type.builtin"]          = "TSTypeBuiltin"
+    hlmap["type.qualifier"]        = "TSTypeQualifier"
+    hlmap["type.definition"]       = "TSTypeDefinition"
 
-hlmap["namespace"] = "TSNamespace"
-
-hlmap["none"] = "TSNone"
-hlmap["number"] = "TSNumber"
-
-hlmap["operator"] = "TSOperator"
-
-hlmap["parameter"] = "TSParameter"
-hlmap["parameter.reference"] = "TSParameterReference"
-
-hlmap["preproc"] = "TSPreProc"
-
-hlmap["property"] = "TSProperty"
-
-hlmap["punctuation.delimiter"] = "TSPunctDelimiter"
-hlmap["punctuation.bracket"] = "TSPunctBracket"
-hlmap["punctuation.special"] = "TSPunctSpecial"
-
-hlmap["repeat"] = "TSRepeat"
-
-hlmap["storageclass"] = "TSStorageClass"
-
-hlmap["string"] = "TSString"
-hlmap["string.regex"] = "TSStringRegex"
-hlmap["string.escape"] = "TSStringEscape"
-hlmap["string.special"] = "TSStringSpecial"
-
-hlmap["symbol"] = "TSSymbol"
-
-hlmap["tag"] = "TSTag"
-hlmap["tag.attribute"] = "TSTagAttribute"
-hlmap["tag.delimiter"] = "TSTagDelimiter"
-
-hlmap["text"] = "TSText"
-hlmap["text.strong"] = "TSStrong"
-hlmap["text.emphasis"] = "TSEmphasis"
-hlmap["text.underline"] = "TSUnderline"
-hlmap["text.strike"] = "TSStrike"
-hlmap["text.title"] = "TSTitle"
-hlmap["text.literal"] = "TSLiteral"
-hlmap["text.uri"] = "TSURI"
-hlmap["text.math"] = "TSMath"
-hlmap["text.reference"] = "TSTextReference"
-hlmap["text.environment"] = "TSEnvironment"
-hlmap["text.environment.name"] = "TSEnvironmentName"
-
-hlmap["text.note"] = "TSNote"
-hlmap["text.warning"] = "TSWarning"
-hlmap["text.danger"] = "TSDanger"
-
-hlmap["todo"] = "TSTodo"
-
-hlmap["type"] = "TSType"
-hlmap["type.builtin"] = "TSTypeBuiltin"
-hlmap["type.qualifier"] = "TSTypeQualifier"
-hlmap["type.definition"] = "TSTypeDefinition"
-
-hlmap["variable"] = "TSVariable"
-hlmap["variable.builtin"] = "TSVariableBuiltin"
+    hlmap["variable"]              = "TSVariable"
+    hlmap["variable.builtin"]      = "TSVariableBuiltin"
 
 local function should_enable_vim_regex(config, lang)
   local additional_hl = config.additional_vim_regex_highlighting
