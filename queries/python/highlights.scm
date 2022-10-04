@@ -1,14 +1,14 @@
-;; From tree-sitter-python licensed under MIT License
+; From tree-sitter-python, licensed under MIT License
 
-; Variables
 (identifier) @variable
 
 ; Reset highlighting in f-string interpolations
 (interpolation) @none
 
-;; Identifier naming conventions
+; ; Identifier naming conventions
 ((identifier) @type
  (#lua-match? @type "^[A-Z].*[a-z]"))
+
 ((identifier) @constant
  (#lua-match? @constant "^[A-Z][A-Z_0-9]*$"))
 
@@ -47,70 +47,73 @@
 
 ; Function calls
 
-(decorator) @function
-((decorator (attribute (identifier) @function))
- (#match? @function "^([A-Z])@!.*$"))
-(decorator) @function
-((decorator (identifier) @function)
- (#match? @function "^([A-Z])@!.*$"))
+    (decorator) @function
+    ((decorator (attribute (identifier) @function))
+    (#match? @function "^([A-Z])@!.*$"))
+    (decorator) @function
+    ((decorator (identifier) @function)
+    (#match? @function "^([A-Z])@!.*$"))
 
-(call
-  function: (identifier) @function)
+    (call
+    function: (identifier) @function)
 
-(call
-  function: (attribute
-              attribute: (identifier) @method))
+    (call
+    function: (attribute
+                attribute: (identifier) @method))
 
-((call
-   function: (identifier) @constructor)
- (#lua-match? @constructor "^[A-Z]"))
+    ((call
+    function: (identifier) @constructor)
+    (#lua-match? @constructor "^[A-Z]"))
 
-((call
-  function: (attribute
-              attribute: (identifier) @constructor))
- (#lua-match? @constructor "^[A-Z]"))
+    ((call
+    function: (attribute
+                attribute: (identifier) @constructor))
+    (#lua-match? @constructor "^[A-Z]"))
 
-;; Builtin functions
+; Builtin functions
 
-((call
-  function: (identifier) @function.builtin)
- (#any-of? @function.builtin
-          "abs" "all" "any" "ascii" "bin" "bool" "breakpoint" "bytearray" "bytes" "callable" "chr" "classmethod"
-          "compile" "complex" "delattr" "dict" "dir" "divmod" "enumerate" "eval" "exec" "filter" "float" "format"
-          "frozenset" "getattr" "globals" "hasattr" "hash" "help" "hex" "id" "input" "int" "isinstance" "issubclass"
-          "iter" "len" "list" "locals" "map" "max" "memoryview" "min" "next" "object" "oct" "open" "ord" "pow"
-          "print" "property" "range" "repr" "reversed" "round" "set" "setattr" "slice" "sorted" "staticmethod" "str"
-          "sum" "super" "tuple" "type" "vars" "zip" "__import__"))
+    ((call
+     function: (identifier) @function.builtin)
+    (#any-of? @function.builtin
+            "abs" "all" "any" "ascii" "bin" "bool" "breakpoint" "bytearray" "bytes" "callable" "chr" "classmethod"
+            "compile" "complex" "delattr" "dict" "dir" "divmod" "enumerate" "eval" "exec" "filter" "float" "format"
+            "frozenset" "getattr" "globals" "hasattr" "hash" "help" "hex" "id" "input" "int" "isinstance" "issubclass"
+            "iter" "len" "list" "locals" "map" "max" "memoryview" "min" "next" "object" "oct" "open" "ord" "pow"
+            "print" "property" "range" "repr" "reversed" "round" "set" "setattr" "slice" "sorted" "staticmethod" "str"
+            "sum" "super" "tuple" "type" "vars" "zip" "__import__"))
 
-;; Function definitions
+; ; Function definitions
 
-(function_definition
-  name: (identifier) @function)
+    (function_definition
+      name: (identifier) @function)
+    
+    (type (identifier) @type)
+    (type
+      (subscript
+        (identifier) @type)) ; type subscript: Tuple[int]
+    
+    ((call
+      function: (identifier) @_isinstance
+      arguments: (argument_list
+        (_)
+        (identifier) @type))
+     (#eq? @_isinstance "isinstance"))
 
-(type (identifier) @type)
-(type
-  (subscript
-    (identifier) @type)) ; type subscript: Tuple[int]
-
-((call
-  function: (identifier) @_isinstance
-  arguments: (argument_list
-    (_)
-    (identifier) @type))
- (#eq? @_isinstance "isinstance"))
-
-;; Normal parameters
+; Normal parameters
 (parameters
   (identifier) @parameter)
-;; Lambda parameters
-(lambda_parameters
-  (identifier) @parameter)
-(lambda_parameters
-  (tuple_pattern
-    (identifier) @parameter))
+
+; Lambda parameters
+   (lambda_parameters
+     (identifier) @parameter)
+   (lambda_parameters
+     (tuple_pattern
+       (identifier) @parameter))
+
 ; Default parameters
 (keyword_argument
   name: (identifier) @parameter)
+
 ; Naming parameters on call-site
 (default_parameter
   name: (identifier) @parameter)
@@ -118,108 +121,111 @@
   (identifier) @parameter)
 (typed_default_parameter
   (identifier) @parameter)
-; Variadic parameters *args, **kwargs
-(parameters
-  (list_splat_pattern ; *args
-    (identifier) @parameter))
-(parameters
-  (dictionary_splat_pattern ; **kwargs
-    (identifier) @parameter))
 
 
-;; Literals
+; Variadic可变参数 parameters *args, **kwargs
+    (parameters
+      (list_splat_pattern ; *args
+        (identifier) @parameter))
+    (parameters
+      (dictionary_splat_pattern ; **kwargs
+        (identifier) @parameter))
 
-(none) @constant.builtin
-[(true) (false)] @boolean
-((identifier) @variable.builtin
- (#eq? @variable.builtin "self"))
 
-(integer) @number
-(float) @float
+; Literals
 
-(comment) @comment
-(string) @string
-[
-  (escape_sequence)
-  "{{"
-  "}}"
-] @string.escape
+    (none) @constant.builtin
+    [(true) (false)] @boolean
+    ((identifier) @variable.builtin
+     (#eq? @variable.builtin "self"))
+    
+    (integer) @number
+    (float) @float
+    
+    (comment) @comment
+    (string) @string
+    [
+      (escape_sequence)
+      "{{"
+      "}}"
+    ] @string.escape
 
 ; Tokens
 
 [
-  "-"
-  "-="
-  ":="
-  "!="
-  "*"
-  "**"
-  "**="
-  "*="
-  "/"
-  "//"
-  "//="
-  "/="
-  "&"
-  "&="
-  "%"
-  "%="
-  "^"
-  "^="
-  "+"
-  "+="
-  "<"
-  "<<"
-  "<<="
-  "<="
-  "<>"
-  "="
-  "=="
-  ">"
-  ">="
-  ">>"
-  ">>="
-  "@"
-  "@="
-  "|"
-  "|="
-  "~"
-  "->"
+    "-"
+    "-="
+    ":="
+    "!="
+    "*"
+    "**"
+    "**="
+    "*="
+    "/"
+    "//"
+    "//="
+    "/="
+    "&"
+    "&="
+    "%"
+    "%="
+    "^"
+    "^="
+    "+"
+    "+="
+    "<"
+    "<<"
+    "<<="
+    "<="
+    "<>"
+    "="
+    "=="
+    ">"
+    ">="
+    ">>"
+    ">>="
+    "@"
+    "@="
+    "|"
+    "|="
+    "~"
+    "->"
 ] @operator
 
 ; Keywords
 [
-  "and"
-  "in"
-  "is"
-  "not"
-  "or"
+    "and"
+    "in"
+    "is"
+    "not"
+    "or"
 
-  "del"
+    "del"
 ] @keyword.operator
 
 [
-  "def"
-  "lambda"
+    "def"
+    "lambda"
 ] @keyword.function
 
+
 [
-  "assert"
-  "async"
-  "await"
-  "class"
-  "exec"
-  "global"
-  "nonlocal"
-  "pass"
-  "print"
-  "with"
-  "as"
+    "assert"
+    "async"
+    "await"
+    "class"
+    "exec"
+    "global"
+    "nonlocal"
+    "pass"
+    "print"
+    "with"
+    "as"
 ] @keyword
 
 [
-  "return"
-  "yield"
+    "return"
+    "yield"
 ] @keyword.return
 (yield "from" @keyword.return)
 
@@ -233,18 +239,20 @@
 
 ["for" "while" "break" "continue"] @repeat
 
-[
-  "try"
-  "except"
-  "raise"
-  "finally"
-] @exception
+; exception
+    [
+        "try"
+        "except"
+        "raise"
+        "finally"
+    ] @exception
+    
+    (raise_statement "from" @exception)
+    
+    (try_statement
+      (else_clause
+        "else" @exception))
 
-(raise_statement "from" @exception)
-
-(try_statement
-  (else_clause
-    "else" @exception))
 
 ["(" ")" "[" "]" "{" "}"] @punctuation.bracket
 
@@ -297,5 +305,4 @@
  (#eq? @variable.builtin "cls")
  (#eq? @_decorator "classmethod"))
 
-;; Error
 (ERROR) @error
